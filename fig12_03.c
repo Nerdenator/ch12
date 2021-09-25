@@ -73,3 +73,47 @@ int main( void )
     printf( "End of run.\n" );
     return 0;   /* indicates successful termination */
 }   /* end main */
+
+/* display program instructions to user */
+void instructions( void ) 
+{
+    printf( "Enter your choice:\n"
+        "   1 to insert an element into the list.\n"
+        "   2 to delete an element from the list.\n"
+        "   3 to end.\n" );
+}   /* end function instructions */
+
+/* Insert a new value into the list in sorted order */
+void insert ( ListNodePtr *sPtr, char value)
+{
+    ListNodePtr newPtr; /* pointer to new node */
+    ListNodePtr previousPtr;    /* pointer to the previous node in the list */
+    ListNodePtr currentPtr; /* pointer to current node in list */
+    newPtr = malloc( sizeof( ListNode ) );
+    if ( newPtr != NULL ) { /* is space available ? */
+        newPtr->data = value;   /* place value in node */
+        newPtr->nextPtr = NULL; /* node does not link to another node */
+
+        previousPtr = NULL;
+        currentPtr = *sPtr;
+
+        /* loop to find the correct location in the list */
+        while ( currentPtr != NULL && value > currentPtr->data ) {
+            previousPtr = currentPtr;   /* walk to ... */
+            currentPtr = currentPtr->nextPtr;   /* ... next node */
+        }   /* end while */
+
+        /* insert new node at beginning of list */
+        if ( previousPtr == NULL ) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }   /* end if */
+        else {  /* insert new node between previousPtr and currentPtr */
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }   /* end else */
+    }   /* end if */
+    else {
+        printf( "%c not inserted. No memory available.\n", value );
+    }   /* end else */
+}   /* end function insert */

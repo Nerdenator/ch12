@@ -91,13 +91,14 @@ void insert ( ListNodePtr *sPtr, char value)
     ListNodePtr currentPtr; /* pointer to current node in list */
     newPtr = malloc( sizeof( ListNode ) );
     if ( newPtr != NULL ) { /* is space available ? */
+        /* Putting stuff from command prompt into new node */
         newPtr->data = value;   /* place value in node */
         newPtr->nextPtr = NULL; /* node does not link to another node */
 
         previousPtr = NULL;
-        currentPtr = *sPtr;
+        currentPtr = *sPtr; /* *sPtr is pointer at start of list */
 
-        /* loop to find the correct location in the list */
+        /* loop to find the correct location in the list. won't run first time as currentPtr is *sPtr and its nextPtr is NULL */
         while ( currentPtr != NULL && value > currentPtr->data ) {
             previousPtr = currentPtr;   /* walk to ... */
             currentPtr = currentPtr->nextPtr;   /* ... next node */
